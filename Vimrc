@@ -1,0 +1,108 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""               
+"               
+"               ██╗   ██╗██╗███╗   ███╗██████╗  ██████╗
+"               ██║   ██║██║████╗ ████║██╔══██╗██╔════╝
+"               ██║   ██║██║██╔████╔██║██████╔╝██║     
+"               ╚██╗ ██╔╝██║██║╚██╔╝██║██╔══██╗██║     
+"                ╚████╔╝ ██║██║ ╚═╝ ██║██║  ██║╚██████╗
+"                 ╚═══╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝
+"               
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+syntax on
+set number
+set relativenumber
+
+" Indentation settings
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set autoindent
+set smartindent
+set cindent              " Use C-style indentation
+
+" Enable mouse support (scroll, click, select)
+set mouse=a
+
+colorscheme default   " Or use another theme like gruvbox or xcode
+
+" =============================
+" Color scheme switcher 
+" =============================
+let g:colorscheme_list = ['default', 'desert', 'elflord', 'gruvbox', 'onedark']
+let g:colorscheme_index = 0
+
+function! SwitchColorScheme()
+    let g:colorscheme_index = (g:colorscheme_index + 1) % len(g:colorscheme_list)
+    execute 'colorscheme ' . g:colorscheme_list[g:colorscheme_index]
+    echo " Switched to " . g:colorscheme_list[g:colorscheme_index]
+endfunction
+
+" Map <Leader>c to switch theme
+nnoremap <Leader>c :call SwitchColorScheme()<CR>
+
+" Auto complete function 
+inoremap { {}<left>
+inoremap " ""<left>
+"inoremap [ []<left>
+
+filetype plugin indent on
+" ===========================
+" Some Function 
+" ==========================
+nnoremap <C-e> :Explore<CR>
+nnoremap <Leader>t :echo 'Current time is ' . strftime('%c')<CR>
+vnoremap <Leader>y "+y
+nnoremap <Leader>Y "+yy 
+
+" ============================
+" HTML-specific enhancements
+" ============================
+" Use 2-space indentation in HTML files
+autocmd FileType html setlocal shiftwidth=2 tabstop=2 expandtab
+
+" Enable HTML tag completion with CTRL-X CTRL-O
+autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+
+" Start plugin block
+call plug#begin('~/.vim/plugged')
+
+" Syntax highlighting for web languages
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'leafgarland/typescript-vim'
+Plug 'othree/html5.vim'
+Plug 'hail2u/vim-css3-syntax'
+
+" Auto-completion engine
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Emmet for fast HTML/CSS snippets
+Plug 'mattn/emmet-vim'
+" Auto pairs
+Plug 'jiangmiao/auto-pairs'
+
+" Snippets (optional)
+""Plug 'honza/vim-snippets'
+
+call plug#end()
+" End plugin block
+
+" Enable syntax highlighting
+syntax on
+filetype plugin indent on
+
+" Configure coc.nvim for better auto-completion
+" Use <Tab> for trigger completion
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+
+" Optional: Auto-close tags and brackets (install plugins like tpope/vim-surround if needed)
+
+" Optional: Automatically close HTML tags if plugin installed
+" Plug 'alvan/vim-closetag'
+" let g:closetag_filenames = '*.html,*.xhtml,*.php'
+
+" Optional: Enable Emmet for HTML (requires plugin)
+" Plug 'mattn/emmet-vim'
+" let g:user_emmet_leader_key = '<C-Z>'
+
+
